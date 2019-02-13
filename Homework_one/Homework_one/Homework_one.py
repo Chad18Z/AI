@@ -11,7 +11,7 @@ done = False
 clock = pygame.time.Clock()
 #enemy = Enemy(Vector(0,0), Vector(1,1), 25)
 player = Player(Vector(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2), Constants.PLAYER_SIZE, 5.5)
-
+print(str(player))
 while not done:
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
