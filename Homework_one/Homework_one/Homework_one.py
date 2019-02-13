@@ -9,9 +9,8 @@ screen = pygame.display.set_mode((Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT)
 done = False
 
 clock = pygame.time.Clock()
-#enemy = Enemy(Vector(0,0), Vector(1,1), 25)
+enemy = Enemy(Vector(100,100), Constants.ENEMY_SIZE, 5)
 player = Player(Vector(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2), Constants.PLAYER_SIZE, 5.5)
-print(str(player))
 while not done:
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -23,6 +22,9 @@ while not done:
         #enemy.draw(screen)
         player.update()
         player.draw(screen)
+
+        enemy.update(player);
+        enemy.draw(screen);
 
         pygame.display.flip()
         clock.tick(Constants.FRAME_RATE)

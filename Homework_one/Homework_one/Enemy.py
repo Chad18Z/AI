@@ -1,20 +1,17 @@
 import pygame
+import Constants
+from Agent import Agent
 from Vector import Vector
 
-class Enemy:
+class Enemy(Agent):
 
-    def __init__(self, position, velocity, size):
-        self.position = position
-        self.velocity = velocity
-        velocity.normalize();
-        self.size = size
+    def update(self, player):
+        #a = Vector(self.position.x - player.position.x, self.position.y - player.position.y)
+        a = Vector(player.position.x - self.position.x, player.position.y - self.position.y)
+        b = a.length()
+        if b < Constants.ENEMY_ATTACK_RANGE:
+            self.velocity = a.normalize()
+        else:
+            self.velocity = Vector(0,0)
 
-    def draw(self, screen):
-        pygame.draw.rect (screen, (0, 0, 0), pygame.Rect(self.position.x, self.position.y, self.size, self.size)) 
-        endPos = self.position + self.velocity.scale(self.size * 2)
-        pygame.draw.line(screen, (0, 0, 0), (self.position.x, self.position.y), (endPos.x, endPos.y), 3)
-
-    def update(self):
-        self.position += self.velocity
-
-      
+        self.position += self.velocity.scale(self.speed)
