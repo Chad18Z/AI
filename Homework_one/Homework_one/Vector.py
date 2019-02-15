@@ -29,5 +29,5 @@ class Vector:
         if i > 0:
              return Vector(self.x/i, self.y/i)
         else:
-             return
+             return Vector(0,0)
    
