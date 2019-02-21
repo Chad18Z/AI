@@ -34,7 +34,7 @@ class EnemyHunter(Agent):
        if self.collision(player):
             self.seeking = not self.seeking
 
-       super(EnemyHunter, self).update(player, screenBounds)  
+       super(EnemyHunter, self).update(screenBounds)  
 
    def draw(self, screen, player):
         super(EnemyHunter, self).draw(screen)

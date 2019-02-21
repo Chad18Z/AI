@@ -12,15 +12,15 @@ done = False
 
 clock = pygame.time.Clock()
 
-player = Player(Vector(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2), Constants.PLAYER_SIZE, 5.5, (0,0,0))
-enemy = Enemy(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.ENEMY_SIZE, 5, (0,255,0))
+player = Player(Vector(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2), Constants.PLAYER_SIZE, Constants.PLAYER_SPEED, (0,0,0))
+enemy = Enemy(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.ENEMY_SIZE, Constants.ENEMY_SPEED, (0,255,0))
 enemyHunter = EnemyHunter(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.ENEMY_SIZE, 5, (255,0,255))
 
 enemyList = []
 
 for i in range (4):
-    enemy = Enemy(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.ENEMY_SIZE, 5, (0,255,0))
-    enemyHunter = EnemyHunter(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.ENEMY_SIZE, 5, (255,0,255))
+    enemy = Enemy(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.ENEMY_SIZE, Constants.ENEMY_SPEED, (0,255,0))
+    enemyHunter = EnemyHunter(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.ENEMY_SIZE, Constants.ENEMY_SPEED, (255,0,255))
     enemyList.append(enemy)
     enemyList.append(enemyHunter)
 
@@ -40,7 +40,7 @@ while not done:
 
         screen.fill((Constants.BACKGROUND_COLOR))
 
-        player.update(enemy, Vector(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT))
+        player.update(Vector(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT))
         player.draw(screen)
 
         for enemy in enemyList:

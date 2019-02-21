@@ -24,7 +24,7 @@ class Enemy(Agent):
         if self.collision(player):
             self.seeking = not self.seeking
 
-        super(Enemy, self).update(player, screenBounds)      
+        super(Enemy, self).update(screenBounds)      
 
     def draw(self, screen, player):
         super(Enemy, self).draw(screen)
