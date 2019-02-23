@@ -9,7 +9,8 @@ class Enemy(Agent):
         super(Enemy, self).__init__(position, size, speed, color)
         self.seeking = True
 
-    def update(self, player, screenBounds):       
+    def update(self, player, screenBounds):   
+        
         if self.seeking:
             a = Vector(player.position.x - self.position.x, player.position.y - self.position.y)
         else:

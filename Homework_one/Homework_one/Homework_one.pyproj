@@ -27,6 +27,9 @@
     <Compile Include="Constants.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Dog.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Enemy.py">
       <SubType>Code</SubType>
     </Compile>
@@ -37,9 +40,16 @@
     <Compile Include="Player.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Sheep.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Vector.py">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="collie.png" />
+    <Content Include="sheep.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -43,12 +43,12 @@ class Agent:
         self.updateCenter()        
         self.updateRect()
         
-    def collision(self, other):
-        if self.agentRect.colliderect(other.agentRect) and not self.noTagBacks:
-            self.noTagBacks = True
-            return True
-        else:
-            return False
+    #def collision(self, other):
+    #    if self.agentRect.colliderect(other.agentRect) and not self.noTagBacks:
+    #        self.noTagBacks = True
+    #        return True
+    #    else:
+    #        return False
 
     def updateCenter(self):
         self.center = Vector(self.position.x + self.size.x/2, self.position.y + self.size.x/2)
