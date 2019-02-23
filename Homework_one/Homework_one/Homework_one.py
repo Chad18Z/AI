@@ -20,7 +20,7 @@ clock = pygame.time.Clock()
 sheepSurface = pygame.image.load("sheep.png")
 dogSurface = pygame.image.load("collie.png")
 
-player = Dog(Vector(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2), Constants.PLAYER_SIZE, Constants.PLAYER_SPEED, dogSurface)
+player = Dog(Vector(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2), Constants.DOG_SIZE, Constants.PLAYER_SPEED, dogSurface)
 
 enemyList = []
 
@@ -29,7 +29,7 @@ for i in range (40):
     #enemyHunter = EnemyHunter(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.ENEMY_SIZE, Constants.ENEMY_SPEED, (255,0,255))
     #enemyList.append(enemy)
     #enemyList.append(enemyHunter)
-    sheep = Sheep(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.ENEMY_SIZE, Constants.ENEMY_SPEED, sheepSurface)
+    sheep = Sheep(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.SHEEP_SIZE, Constants.ENEMY_SPEED, sheepSurface)
     enemyList.append(sheep)
 
 TAGEVENT = pygame.USEREVENT

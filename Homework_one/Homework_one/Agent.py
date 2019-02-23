@@ -8,7 +8,7 @@ class Agent:
         self.position = position
         self.velocity = Vector(0,0)
         self.speed = speed
-        self.size = Vector(size, size)
+        self.size = size
         self.center = Vector(self.position.x + self.size.x/2, self.position.y + self.size.x/2)
         self.agentRect = pygame.Rect(self.position.x, self.position.y, self.size.x, self.size.x)
         self.noTagBacks = False
@@ -51,7 +51,7 @@ class Agent:
     #        return False
 
     def updateCenter(self):
-        self.center = Vector(self.position.x + self.size.x/2, self.position.y + self.size.x/2)
+        self.center = Vector(self.position.x + self.size.x/2, self.position.y + self.size.y/2)
 
     def updateRect(self):
-           self.agentRect = pygame.Rect(self.position.x, self.position.y, self.size.x, self.size.x)
+           self.agentRect = pygame.Rect(self.position.x, self.position.y, self.size.x, self.size.y)
