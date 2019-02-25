@@ -24,13 +24,15 @@ player = Dog(Vector(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2), Cons
 
 enemyList = []
 
-for i in range (40):
+for i in range (100):
     #enemy = Enemy(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.ENEMY_SIZE, Constants.ENEMY_SPEED, (0,255,0))
     #enemyHunter = EnemyHunter(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.ENEMY_SIZE, Constants.ENEMY_SPEED, (255,0,255))
     #enemyList.append(enemy)
     #enemyList.append(enemyHunter)
     sheep = Sheep(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.SHEEP_SIZE, Constants.ENEMY_SPEED, sheepSurface)
     enemyList.append(sheep)
+
+Sheep.sheepList = enemyList
 
 TAGEVENT = pygame.USEREVENT
 tagBack = False

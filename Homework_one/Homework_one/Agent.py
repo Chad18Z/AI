@@ -13,6 +13,7 @@ class Agent:
         self.agentRect = pygame.Rect(self.position.x, self.position.y, self.size.x, self.size.x)
         self.noTagBacks = False
         self.color = color
+        self.currentSpeed = 0
 
     def __str__(self):
         a = ("Size: " + str(self.size.x) + "\n")
@@ -43,15 +44,15 @@ class Agent:
         self.updateCenter()        
         self.updateRect()
         
-    #def collision(self, other):
-    #    if self.agentRect.colliderect(other.agentRect) and not self.noTagBacks:
-    #        self.noTagBacks = True
-    #        return True
-    #    else:
-    #        return False
+    def collision(self, other):
+        if self.agentRect.colliderect(other.agentRect) and not self.noTagBacks:
+            self.noTagBacks = True
+            return True
+        else:
+            return False
 
     def updateCenter(self):
         self.center = Vector(self.position.x + self.size.x/2, self.position.y + self.size.y/2)
 
     def updateRect(self):
-           self.agentRect = pygame.Rect(self.position.x, self.position.y, self.size.x, self.size.y)
+        self.agentRect = pygame.Rect(self.position.x, self.position.y, self.size.x, self.size.y)
