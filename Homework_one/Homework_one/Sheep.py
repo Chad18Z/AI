@@ -1,5 +1,6 @@
 import pygame
 import Constants
+import random
 from Agent import Agent
 from Vector import Vector
 from Enemy import Enemy
@@ -15,43 +16,85 @@ class Sheep(Agent):
         self.sheepSurface = surface
         self.currentSpeed = 0
         self.activeSurface = surface
-        self.agentRect = self.sheepSurface.get_bounding_rect(min_alpha = 1)
+        #self.agentRect = self.sheepSurface.get_bounding_rect()
+        self.velocity = Vector((random.uniform(0,1) - .5), (random.uniform(0,1) - .5))
+        self.velocity.normalize()
         self.neighbors = []
 
     def update(self, player, screenBounds):      
         a = Vector(self.position.x - player.position.x, self.position.y - player.position.y)
         b = a.length()
         if b < Constants.ENEMY_ATTACK_RANGE:
+            self.calculateNeighbors()
             self.velocity = a.normalize()
             self.currentSpeed = self.speed
-        else:
-            self.velocity = Vector(0,0) 
-            self.currentSpeed = 0
-        #if self.collision(player):
-        #    self.seeking = not self.seeking
-        if self.currentSpeed > 0:
+            self.velocity += self.calculateVelocity(self.velocity)
             self.faceDirection()
-        self.calculateNeighbors()
+        else:
+            self.velocity = Vector(0,0)
+            self.currentSpeed = 0
 
-        #self.velocity += self.align()
-        self.velocity += self.cohesion()
-       
+        # check to see if this sheep is within the boundary radius
+        self.velocity += self.checkBounds(screenBounds)
+
         super(Sheep, self).update(screenBounds) 
 
-    def draw(self, screen, player):
-        endPos = self.position + self.velocity.scale(self.size.x * 2)
-        pygame.draw.rect (screen, self.color, self.agentRect)
-        screen.blit(self.activeSurface, [self.position.x, self.position.y])      
-        pygame.draw.line(screen, (0, 0, 255), (self.center.x, self.center.y), (endPos.x, endPos.y), 3)
+    # If agent is near a boundary, then move it in the other direction
+    def checkBounds(self, screenBounds):
+        boundsVector = Vector(0,0)
+        if self.position.x < Constants.SHEEP_BOUNDARY_RADIUS:
+            boundsVector.x += 1
+        if (self.position.x > (Constants.WORLD_WIDTH - Constants.SHEEP_BOUNDARY_RADIUS)):
+            boundsVector.x -= 1
+        if self.position.y < Constants.SHEEP_BOUNDARY_RADIUS:
+            boundsVector.y += 1
+        if(self.position.y > (Constants.WORLD_HEIGHT - Constants.SHEEP_BOUNDARY_RADIUS)):
+            boundsVector.y -= 1
+        return boundsVector.normalize()
 
+    def calculateVelocity(self, velocity):       
+        velocity += self.align().scale(Constants.SHEEP_ALIGNMENT_WEIGHT)
+        velocity += self.cohesion().scale(Constants.SHEEP_COHESION_WEIGHT)
+        velocity += self.separation().scale(Constants.SHEEP_SEPARATION_WEIGHT)
+        return velocity
+
+    def draw(self, screen, player):
+
+        # calculate the end position of the velocity line
+        endPos = self.position + self.velocity.scale(self.size.x * 2)
+
+        # draw the rect
+        pygame.draw.rect (screen, self.color, self.agentRect)
+
+        # draw the sprite
+        screen.blit(self.activeSurface, [self.position.x, self.position.y]) 
+        
+        # draw the velocity line
+        pygame.draw.line(screen, (0, 0, 255), (self.center.x, self.center.y), (endPos.x, endPos.y), 1)
+
+        # draw lines to neighbors
+        self.drawNeighborLines(screen)
+
+        # direction to the player (dog)
+        a = Vector(self.position.x - player.position.x, self.position.y - player.position.y)
+
+        # magnitude of the direction vector
+        b = a.length()
+
+        # check if dog is in range. If it is, then draw a line to it
+        if b < Constants.ENEMY_ATTACK_RANGE:
+            pygame.draw.line(screen, (255, 0, 0), (self.center.x, self.center.y), (player.center.x, player.center.y), 1)
+
+    # rotates the sprite into the direction of movement
     def faceDirection(self):
         angle = math.degrees(math.atan2(-self.velocity.y, self.velocity.x))
         self.activeSurface = pygame.transform.rotate(self.sheepSurface, angle - 90)
 
+    # updates the bounding rect around this sheep
     def updateRect(self):
         #self.agentRect = pygame.Rect(self.position.x, self.position.y, self.size.x, self.size.y)
-        self.agentRect = self.sheepSurface.get_bounding_rect()
-        #print(self.agentRect)
+        tempRect = self.sheepSurface.get_bounding_rect()
+        self.agentRect = pygame.Rect(self.position.x - tempRect.x, self.position.y - tempRect.y, tempRect.w, tempRect.h)
 
     def calculateNeighbors(self):
         self.neighbors = []
@@ -78,6 +121,12 @@ class Sheep(Agent):
 
         return alignmentVector
 
+    def drawNeighborLines(self, screen):
+        if len(self.neighbors) == 0:
+            return
+        for neighbor in self.neighbors:
+            pygame.draw.line(screen, (0, 0, 255), (self.center.x, self.center.y), (neighbor.center.x, neighbor.center.y), 1)
+
     def cohesion(self):
         cohesionVector = Vector(0,0)
         if len(self.neighbors) == 0:
@@ -89,12 +138,28 @@ class Sheep(Agent):
         x = cohesionVector.x / len(self.neighbors)
         y = cohesionVector.y / len(self.neighbors)
 
-        cohesionVector.x = x
-        cohesionVector.y = y
-        cohesionVector.normalize()
+        directionVector = Vector(x - self.position.x, y - self.position.y)
+        directionVector.normalize()
 
-        return cohesionVector
+        return directionVector
 
-#    def separation(self):
-        #something
+    def separation(self):
+        separationVector = Vector(0,0)
+        if len(self.neighbors) == 0:
+            return Vector(0,0)
+        for neighbor in self.neighbors:
+            separationVector.x += neighbor.position.x - self.position.x
+            separationVector.y += neighbor.position.y - self.position.y
+
+        x = separationVector.x / len(self.neighbors)
+        y = separationVector.y / len(self.neighbors)
+
+        separationVector.x = x * -1
+        separationVector.y = y * -1
+
+        separationVector.normalize()
+        return separationVector
+        
+
+
 

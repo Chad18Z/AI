@@ -30,23 +30,25 @@ for i in range (100):
     #enemyList.append(enemy)
     #enemyList.append(enemyHunter)
     sheep = Sheep(Vector(random.randint(0, Constants.WORLD_WIDTH), random.randint(0, Constants.WORLD_HEIGHT)), Constants.SHEEP_SIZE, Constants.ENEMY_SPEED, sheepSurface)
+
     enemyList.append(sheep)
 
 Sheep.sheepList = enemyList
 
-TAGEVENT = pygame.USEREVENT
+#TAGEVENT = pygame.USEREVENT
 tagBack = False
-
+#pygame.time.set_timer(TAGEVENT, 1000)
 while not done:
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     done = True
-                if event.type == TAGEVENT:
-                    for enemy in enemyList:
-                        enemy.noTagBacks = False
+                #if event.type == TAGEVENT:
+                    #for enemy in enemyList:
+                        #enemy.calculateNeighbors()
 
-                    tagBack = False
-                    TAGEVENT = pygame.USEREVENT
+                    #tagBack = False
+                    #TAGEVENT = pygame.USEREVENT
+                    #pygame.time.set_timer(TAGEVENT, 1000)
 
         screen.fill((Constants.BACKGROUND_COLOR))
 

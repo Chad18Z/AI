@@ -23,7 +23,7 @@ class Dog(Agent):
         else:
             currentSpeed = self.speed
             self.faceDirection()
-        #super(Dog, self).update(screenBounds)
+        super(Dog, self).update(screenBounds)
 
     def draw(self, screen):
         endPos = self.position + self.velocity.scale(self.size.x * 2)

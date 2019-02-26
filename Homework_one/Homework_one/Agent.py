@@ -14,6 +14,7 @@ class Agent:
         self.noTagBacks = False
         self.color = color
         self.currentSpeed = 0
+        self.target = Vector(0,0)
 
     def __str__(self):
         a = ("Size: " + str(self.size.x) + "\n")
@@ -56,3 +57,6 @@ class Agent:
 
     def updateRect(self):
         self.agentRect = pygame.Rect(self.position.x, self.position.y, self.size.x, self.size.y)
+
+    def updateVelocity(self, velocity):
+        self.velocity = velocity.normalize()
