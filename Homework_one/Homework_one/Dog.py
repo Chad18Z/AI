@@ -27,9 +27,9 @@ class Dog(Agent):
 
     def draw(self, screen):
         endPos = self.position + self.velocity.scale(self.size.x * 2)
-        #pygame.draw.rect (screen, self.color, self.agentRect)
+        pygame.draw.rect (screen, self.color, self.agentRect)
         screen.blit(self.activeSurface, [self.position.x, self.position.y])      
-        pygame.draw.line(screen, (0, 0, 255), (self.center.x, self.center.y), (endPos.x, endPos.y), 3)
+        pygame.draw.line(screen, (0, 0, 255), (self.center.x, self.center.y), (endPos.x, endPos.y), 1)
 
     def faceDirection(self):
         angle = math.degrees(math.atan2(-self.velocity.y, self.velocity.x))

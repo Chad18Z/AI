@@ -16,10 +16,11 @@ class Sheep(Agent):
         self.sheepSurface = surface
         self.currentSpeed = 0
         self.activeSurface = surface
-        #self.agentRect = self.sheepSurface.get_bounding_rect()
+        self.agentRect = self.activeSurface.get_bounding_rect()
         self.velocity = Vector((random.uniform(0,1) - .5), (random.uniform(0,1) - .5))
         self.velocity.normalize()
         self.neighbors = []
+        self.size = Vector(self.agentRect.width, self.agentRect.height)
 
     def update(self, player, screenBounds):      
         a = Vector(self.position.x - player.position.x, self.position.y - player.position.y)
@@ -27,9 +28,11 @@ class Sheep(Agent):
         if b < Constants.ENEMY_ATTACK_RANGE:
             self.calculateNeighbors()
             self.velocity = a.normalize()
+            self.velocity.scale(Constants.SHEEP_DOG_INFLUENCE_WEIGHT)
             self.currentSpeed = self.speed
             self.velocity += self.calculateVelocity(self.velocity)
             self.faceDirection()
+            self.updateRect()
         else:
             self.velocity = Vector(0,0)
             self.currentSpeed = 0
@@ -93,8 +96,9 @@ class Sheep(Agent):
     # updates the bounding rect around this sheep
     def updateRect(self):
         #self.agentRect = pygame.Rect(self.position.x, self.position.y, self.size.x, self.size.y)
-        tempRect = self.sheepSurface.get_bounding_rect()
-        self.agentRect = pygame.Rect(self.position.x - tempRect.x, self.position.y - tempRect.y, tempRect.w, tempRect.h)
+        tempRect = self.activeSurface.get_bounding_rect()
+        self.agentRect = pygame.Rect(self.position.x - tempRect.left, self.position.y - tempRect.y, tempRect.w, tempRect.h)
+        self.agentRect.move(-4,4)
 
     def calculateNeighbors(self):
         self.neighbors = []
