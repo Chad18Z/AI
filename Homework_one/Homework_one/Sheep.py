@@ -4,28 +4,24 @@ import random
 from Agent import Agent
 from Vector import Vector
 from Enemy import Enemy
+from main import dog
 import math
 
 class Sheep(Agent):
 
     sheepList = []
 
-    def __init__(self, position, size, speed, surface):
+    def __init__(self, surface, position, size, color, speed, angularSpeed):
         # Passing black as the color to the base class
-        super(Sheep, self).__init__(position, size, speed, (0,0,0))
-        self.sheepSurface = surface
+        super(Sheep, self).__init__(surface, position, size, color, speed, angularSpeed)
         self.currentSpeed = 0
-        self.activeSurface = surface
-        self.agentRect = self.activeSurface.get_bounding_rect()
-        self.velocity = Vector((random.uniform(0,1) - .5), (random.uniform(0,1) - .5))
-        self.velocity.normalize()
+        self.activeSurface = self.surf
         self.neighbors = []
-        self.size = Vector(self.agentRect.width, self.agentRect.height)
 
-    def update(self, player, screenBounds):      
-        a = Vector(self.position.x - player.position.x, self.position.y - player.position.y)
+    def update(self, bounds, graph, dog, herd, GATES):      
+        a = Vector(self.position.x - dog.position.x, self.position.y - dog.position.y)
         b = a.length()
-        if b < Constants.ENEMY_ATTACK_RANGE:
+        if b < Constants.MIN_ATTACK_DIST:
             self.calculateNeighbors()
             self.velocity = a.normalize()
             self.velocity.scale(Constants.SHEEP_DOG_INFLUENCE_WEIGHT)
@@ -38,12 +34,11 @@ class Sheep(Agent):
             self.currentSpeed = 0
 
         # check to see if this sheep is within the boundary radius
-        self.velocity += self.checkBounds(screenBounds)
-
-        super(Sheep, self).update(screenBounds) 
+        self.velocity += self.checkBounds(bounds)
+        super(Sheep, self).update(bounds, graph, herd, GATES) 
 
     # If agent is near a boundary, then move it in the other direction
-    def checkBounds(self, screenBounds):
+    def checkBounds(self, bounds):
         boundsVector = Vector(0,0)
         if self.position.x < Constants.SHEEP_BOUNDARY_RADIUS:
             boundsVector.x += 1
@@ -61,16 +56,12 @@ class Sheep(Agent):
         velocity += self.separation().scale(Constants.SHEEP_SEPARATION_WEIGHT)
         return velocity
 
-    def draw(self, screen, player):
+    def draw(self, screen):
 
         # calculate the end position of the velocity line
         endPos = self.position + self.velocity.scale(self.size.x * 2)
 
-        # draw the rect
-        #pygame.draw.rect (screen, self.color, self.agentRect)
 
-        # draw the sprite
-        screen.blit(self.activeSurface, [self.position.x, self.position.y]) 
         
         # draw the velocity line
         #pygame.draw.line(screen, (0, 0, 255), (self.center.x, self.center.y), (endPos.x, endPos.y), 1)
@@ -79,7 +70,7 @@ class Sheep(Agent):
         #self.drawNeighborLines(screen)
 
         # direction to the player (dog)
-        a = Vector(self.position.x - player.position.x, self.position.y - player.position.y)
+        a = Vector(self.position.x - dog.position.x, self.position.y - dog.position.y)
 
         # magnitude of the direction vector
         b = a.length()
@@ -93,12 +84,6 @@ class Sheep(Agent):
         angle = math.degrees(math.atan2(-self.velocity.y, self.velocity.x))
         self.activeSurface = pygame.transform.rotate(self.sheepSurface, angle - 90)
 
-    # updates the bounding rect around this sheep
-    def updateRect(self):
-        #self.agentRect = pygame.Rect(self.position.x, self.position.y, self.size.x, self.size.y)
-        tempRect = self.activeSurface.get_bounding_rect()
-        self.agentRect = pygame.Rect(self.position.x - tempRect.left, self.position.y - tempRect.y, tempRect.w, tempRect.h)
-        self.agentRect.move(-4,6)
 
     def calculateNeighbors(self):
         self.neighbors = []

@@ -12,7 +12,7 @@ class Vector:
     def __add__(self, other):
         return Vector(self.x + other.x, self.y + other.y)
 
-    def __subtract__(self, other):
+    def __sub__(self, other):
         return Vector(self.x - other.x, self.y - other.y)
 
     def dot(self, other):
