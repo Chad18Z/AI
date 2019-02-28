@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4c57d52c-afb6-4f91-983f-ff6c0537f26b</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Homework_one.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -36,7 +36,11 @@
     <Compile Include="EnemyHunter.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Homework_one.py" />
+    <Compile Include="Graph.py" />
+    <Compile Include="main.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Node.py" />
     <Compile Include="Player.py">
       <SubType>Code</SubType>
     </Compile>

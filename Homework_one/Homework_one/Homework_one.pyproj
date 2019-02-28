@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4c57d52c-afb6-4f91-983f-ff6c0537f26b</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Homework_one.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,19 +24,21 @@
     <Compile Include="Agent.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Constants.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Constants.py" />
     <Compile Include="Dog.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DrawableObject.py" />
     <Compile Include="Enemy.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EnemyHunter.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Graph.py" />
     <Compile Include="Homework_one.py" />
+    <Compile Include="main.py" />
+    <Compile Include="Node.py" />
     <Compile Include="Player.py">
       <SubType>Code</SubType>
     </Compile>
