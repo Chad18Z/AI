@@ -4,7 +4,6 @@ import random
 from Agent import Agent
 from Vector import Vector
 from Enemy import Enemy
-from main import dog
 import math
 
 class Sheep(Agent):
@@ -28,7 +27,6 @@ class Sheep(Agent):
             self.currentSpeed = self.speed
             self.velocity += self.calculateVelocity(self.velocity)
             self.faceDirection()
-            self.updateRect()
         else:
             self.velocity = Vector(0,0)
             self.currentSpeed = 0
@@ -56,33 +54,10 @@ class Sheep(Agent):
         velocity += self.separation().scale(Constants.SHEEP_SEPARATION_WEIGHT)
         return velocity
 
-    def draw(self, screen):
-
-        # calculate the end position of the velocity line
-        endPos = self.position + self.velocity.scale(self.size.x * 2)
-
-
-        
-        # draw the velocity line
-        #pygame.draw.line(screen, (0, 0, 255), (self.center.x, self.center.y), (endPos.x, endPos.y), 1)
-
-        # draw lines to neighbors
-        #self.drawNeighborLines(screen)
-
-        # direction to the player (dog)
-        a = Vector(self.position.x - dog.position.x, self.position.y - dog.position.y)
-
-        # magnitude of the direction vector
-        b = a.length()
-
-        # check if dog is in range. If it is, then draw a line to it
-        if b < Constants.ENEMY_ATTACK_RANGE:
-            pygame.draw.line(screen, (255, 0, 0), (self.center.x, self.center.y), (player.center.x, player.center.y), 1)
-
     # rotates the sprite into the direction of movement
     def faceDirection(self):
         angle = math.degrees(math.atan2(-self.velocity.y, self.velocity.x))
-        self.activeSurface = pygame.transform.rotate(self.sheepSurface, angle - 90)
+        self.activeSurface = pygame.transform.rotate(self.surf, angle - 90)
 
 
     def calculateNeighbors(self):
@@ -148,6 +123,7 @@ class Sheep(Agent):
 
         separationVector.normalize()
         return separationVector
+
         
 
 
