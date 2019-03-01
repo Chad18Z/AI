@@ -18,7 +18,7 @@ class Sheep(Agent):
         self.neighbors = []
 
     def update(self, bounds, graph, dog, herd, GATES):      
-        a = Vector(self.position.x - dog.position.x, self.position.y - dog.position.y)
+        a = self.position - dog.position
         b = a.length()
         if b < Constants.MIN_ATTACK_DIST:
             self.calculateNeighbors()
@@ -56,7 +56,7 @@ class Sheep(Agent):
     def calculateNeighbors(self):
         self.neighbors = []
         for sheep in Sheep.sheepList:
-            a = Vector(sheep.position.x - self.position.x, sheep.position.y - self.position.y)
+            a = sheep.position - self.position
             b = a.length()
             if b < Constants.SHEEP_NEIGHBOR_RADIUS:
                 self.neighbors.append(sheep)
@@ -70,12 +70,9 @@ class Sheep(Agent):
 
         x = alignmentVector.x / len(self.neighbors)
         y = alignmentVector.y / len(self.neighbors)
-
         alignmentVector.x = x
         alignmentVector.y = y
         alignmentVector.normalize()
-
-
         return alignmentVector
 
     def drawNeighborLines(self, screen):

@@ -30,7 +30,8 @@ class Agent(DrawableObject):
         pygame.draw.line(screen, (0, 0, 255), (self.center.x, self.center.y), (endPos.x, endPos.y), 3)
 
     def update(self, bounds, graph, herd, GATES):
-        self.position += self.velocity.scale(self.speed)
+        if self.currentSpeed > 0:
+            self.position += self.velocity.scale(self.currentSpeed)
 
         if self.position.x < 0:
             self.position.x = 0
