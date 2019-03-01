@@ -1,5 +1,6 @@
 import pygame
 import Constants
+import math
 from Vector import Vector
 from DrawableObject import DrawableObject
 
@@ -44,6 +45,7 @@ class Agent(DrawableObject):
 
         self.updateCenter()        
         self.calcSurface()
+        self.faceDirection()
         
     def collision(self, other):
         if self.agentRect.colliderect(other.agentRect) and not self.noTagBacks:
@@ -57,3 +59,8 @@ class Agent(DrawableObject):
 
     def updateVelocity(self, velocity):
         self.velocity = velocity.normalize()
+
+        # rotates the sprite into the direction of movement
+    def faceDirection(self):
+        angle = math.degrees(math.atan2(-self.velocity.y, self.velocity.x))
+        self.activeSurface = pygame.transform.rotate(self.surf, angle - 90)

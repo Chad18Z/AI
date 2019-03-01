@@ -26,9 +26,8 @@ class Sheep(Agent):
             self.velocity.scale(Constants.SHEEP_DOG_INFLUENCE_WEIGHT)
             self.currentSpeed = self.speed
             self.velocity += self.calculateVelocity(self.velocity)
-            self.faceDirection()
         else:
-            self.velocity = Vector(0,0)
+            #self.velocity = Vector(0,0)
             self.currentSpeed = 0
 
         # check to see if this sheep is within the boundary radius
@@ -53,12 +52,6 @@ class Sheep(Agent):
         velocity += self.cohesion().scale(Constants.SHEEP_COHESION_WEIGHT)
         velocity += self.separation().scale(Constants.SHEEP_SEPARATION_WEIGHT)
         return velocity
-
-    # rotates the sprite into the direction of movement
-    def faceDirection(self):
-        angle = math.degrees(math.atan2(-self.velocity.y, self.velocity.x))
-        self.activeSurface = pygame.transform.rotate(self.surf, angle - 90)
-
 
     def calculateNeighbors(self):
         self.neighbors = []
