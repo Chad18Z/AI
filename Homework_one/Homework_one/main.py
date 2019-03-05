@@ -16,7 +16,7 @@ from Sheep import *
 from Player import *
 from Graph import *
 from Node import *
-
+from Search import Search
 #################################################################################
 # Helper Functions
 #################################################################################
@@ -99,6 +99,8 @@ herd.append(sheep)
 buildGates(graph)
 buildObstacles(graph)
 
+search = Search()
+
 # While the user has not selected quit
 hasQuit = False
 while not hasQuit:
@@ -125,6 +127,7 @@ while not hasQuit:
 	# Double buffer
 	pygame.display.flip()
 
+	search.update(graph, dog, sheep)
 	# Limit to 60 FPS
 	clock.tick(Constants.FRAME_RATE)
 

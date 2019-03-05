@@ -39,6 +39,9 @@
     <Compile Include="Player.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Search.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Sheep.py">
       <SubType>Code</SubType>
     </Compile>
