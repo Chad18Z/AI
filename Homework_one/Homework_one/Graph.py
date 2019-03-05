@@ -118,8 +118,9 @@ class Graph():
 		start.isVisited = True
 		while (len(q) > 0):
 			curr = q.pop(0)
+			curr.isExplored = True
 			if curr == end:
-				path = buildPath(end)
+				path = self.buildPath(end)
 				return path
 			for neighbor in curr.neighbors:
 				if neighbor.isVisited == False:
