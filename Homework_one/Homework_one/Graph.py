@@ -135,7 +135,28 @@ class Graph():
 		self.reset()		
 
 		# TODO: Add your Djikstra code here!
-
+		q = []
+		q.append(start)
+		start.isVisited = True
+		start.cost = 0
+		while (len(q) > 0):
+			curr = q.pop(0)
+			curr.isExplored = True
+			if curr == end:
+				path = self.buildPath(end)
+				return path
+			for neighbor in curr.neighbors:
+				currentCost = (neighbor.center - curr.center).length()
+				if neighbor.isVisited == False:
+					neighbor.isVisited = True
+					neighbor.costFromStart = curr.costFromStart + currentCost
+					neighbor.cost = neighbor.costFromStart					
+					neighbor.backNode = curr
+					q.append(neighbor)
+					q.sort(key=lambda neighbor: neighbor.cost, reverse=True)
+				elif (currentCost + curr.cost) < neighbor.cost:
+					neighbor.cost = currentCost + curr.cost
+					neighbor.backNode = curr
 		return []
 
 	def findPath_AStar(self, start, end):
