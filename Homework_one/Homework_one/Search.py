@@ -25,3 +25,10 @@ class Search:
             playerNode = graph.getNodeFromPoint(player.position)
             sheepNode = graph.getNodeFromPoint(sheep.position)
             graph.findPath_BestFirst(playerNode, sheepNode)
+
+        # perform BEST search if player presses D key
+        elif pressed[pygame.K_s]:
+            graph.reset()
+            playerNode = graph.getNodeFromPoint(player.position)
+            sheepNode = graph.getNodeFromPoint(sheep.position)
+            graph.findPath_AStar(playerNode, sheepNode)

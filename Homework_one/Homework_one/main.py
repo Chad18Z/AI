@@ -104,6 +104,8 @@ search = Search()
 # While the user has not selected quit
 hasQuit = False
 while not hasQuit:
+
+
 	# Clear the screen
 	screen.fill(Constants.BACKGROUND_COLOR)
 

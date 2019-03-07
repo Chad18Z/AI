@@ -154,8 +154,8 @@ class Graph():
 					neighbor.backNode = curr
 					q.append(neighbor)
 					q.sort(key=lambda neighbor: neighbor.cost, reverse = False)
-				elif (currentCost + curr.cost) < neighbor.cost:
-					neighbor.cost = currentCost + curr.cost
+				elif (currentCost + curr.costFromStart) < neighbor.cost:
+					neighbor.cost = currentCost + curr.costFromStart
 					neighbor.backNode = curr
 		return []
 
@@ -165,6 +165,29 @@ class Graph():
 		self.reset()
 
 		# TODO: Add your A-star code here!
+		q = []
+		q.append(start)
+		start.isVisited = True
+		start.cost = 0
+		while (len(q) > 0):
+			curr = q.pop(0)
+			curr.isExplored = True
+			if curr == end:
+				path = self.buildPath(end)
+				return path
+			for neighbor in curr.neighbors:
+				costToEnd = (end.center - neighbor.center).length()
+				currentCost = (neighbor.center - curr.center).length()
+				if neighbor.isVisited == False:
+					neighbor.isVisited = True
+					neighbor.costFromStart = curr.costFromStart + currentCost
+					neighbor.cost = costToEnd					
+					neighbor.backNode = curr
+					q.append(neighbor)
+					q.sort(key=lambda neighbor: neighbor.cost, reverse = False)
+				elif (costToEnd) < neighbor.cost:
+					neighbor.cost = neighbor.costFromStart + costToEnd
+					neighbor.backNode = curr
 
 		return []
 
