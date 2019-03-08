@@ -32,6 +32,7 @@ class Sheep(Agent):
 
         # check to see if this sheep is within the boundary radius
         self.velocity += self.checkBounds(bounds)
+        self.velocity += self.checkNearbyObstacles(graph)
         super(Sheep, self).update(bounds, graph, herd, GATES) 
 
     # If agent is near a boundary, then move it in the other direction
@@ -52,6 +53,13 @@ class Sheep(Agent):
         velocity += self.cohesion().scale(Constants.SHEEP_COHESION_WEIGHT)
         velocity += self.separation().scale(Constants.SHEEP_SEPARATION_WEIGHT)
         return velocity
+
+    def checkNearbyObstacles(self, graph):
+        obstacleAvoidVector = Vector(0,0)
+        for node in graph.obstacles:
+            if (node.center - self.center).length() <= Constants.SHEEP_OBSTACLE_RADIUS:
+                obstacleAvoidVector += (self.center - node.center).normalize().scale(Constants.SHEEP_OBSTACLE_INFLUENCE_WEIGHT)
+        return obstacleAvoidVector
 
     def calculateNeighbors(self):
         self.neighbors = []

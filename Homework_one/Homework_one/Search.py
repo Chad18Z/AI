@@ -15,7 +15,7 @@ class Search:
     def update(self, graph, player, sheep):
         self.player = player
         pressed = pygame.key.get_pressed()
-        # perfrom breadth first search if player presses A key
+        # perfrom breadth first search if player presses f key
         if pressed[pygame.K_f]:
             graph.reset()
             playerNode = graph.getNodeFromPoint(player.position)
@@ -24,7 +24,7 @@ class Search:
             self.hasPath = True
             self.currentSearch = 1
 
-        # perform Djikstra's search if player presses W key
+        # perform Djikstra's search if player presses d key
         elif pressed[pygame.K_d]:
             graph.reset()
             playerNode = graph.getNodeFromPoint(player.position)
@@ -33,7 +33,7 @@ class Search:
             self.hasPath = True
             self.currentSearch = 2
 
-        # perform BEST search if player presses D key
+        # perform BEST search if player presses s key
         elif pressed[pygame.K_s]:
             graph.reset()
             playerNode = graph.getNodeFromPoint(player.position)
@@ -42,7 +42,7 @@ class Search:
             self.hasPath = True
             self.currentSearch = 3
 
-        # perform A* search if player presses D key
+        # perform A* search if player presses a key
         elif pressed[pygame.K_a]:
             graph.reset()
             playerNode = graph.getNodeFromPoint(player.position)

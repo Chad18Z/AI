@@ -15,6 +15,7 @@ class Agent(DrawableObject):
         self.currentSpeed = 0
         self.target = Vector(0,0)
         self.activeSurface = self.surf
+        self.oldVelocity = Vector(0,0)
 
     def __str__(self):
         a = ("Size: " + str(self.size.x) + "\n")
@@ -30,6 +31,7 @@ class Agent(DrawableObject):
         pygame.draw.line(screen, (0, 0, 255), (self.center.x, self.center.y), (endPos.x, endPos.y), 3)
 
     def update(self, bounds, graph, herd, GATES):
+        oldVelocity = self.velocity
         if self.currentSpeed > 0:
             self.position += self.velocity.scale(self.currentSpeed)
 
@@ -63,5 +65,6 @@ class Agent(DrawableObject):
 
         # rotates the sprite into the direction of movement
     def faceDirection(self):
-        angle = math.degrees(math.atan2(-self.velocity.y, self.velocity.x))
+        diff = (self.velocity - self.oldVelocity).scale(Constants.SHEEP_ANGULAR_SPEED)
+        angle = math.degrees(math.atan2(-diff.y, diff.x))
         self.activeSurface = pygame.transform.rotate(self.surf, angle - 90)
